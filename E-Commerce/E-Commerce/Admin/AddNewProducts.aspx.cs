@@ -24,8 +24,6 @@ namespace E_Commerce.Admin
             DataTable dt = d.GetCategories();
             if (dt.Rows.Count > 0)
             {
-                DropCategory.Items.Insert(0, new ListItem("CategoryName", "CategoryID"));
-
                 DropCategory.DataTextField = "CategoryName";
                 DropCategory.DataValueField = "CategoryID";
                 DropCategory.DataSource = dt;
@@ -48,7 +46,8 @@ namespace E_Commerce.Admin
                     CategoryID = Convert.ToInt32(DropCategory.SelectedValue)
                 };
                 d.AddNewProduct();
-                //Alert.Show("Record Saved Successfully");
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Product saved successfully!');", true);
+
                 //ClearText();
             }
             else
@@ -64,14 +63,24 @@ namespace E_Commerce.Admin
                 string filename = brwProductImage.PostedFile.FileName.ToString();
                 string fileExt = System.IO.Path.GetExtension(brwProductImage.FileName);
 
-                if (filename.Length > 96 || fileExt != ".jpeg" || fileExt != ".jpp" || fileExt != ".png" || brwProductImage.PostedFile.ContentLength > 400000)
+                if (filename.Length > 96)
                 {
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Message here');", true);
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('File Name is too long!');", true);
                 }
                 //else if()
+                else if(fileExt != ".jpeg" && fileExt != ".jpp" && fileExt != ".png" && fileExt != ".bmp")
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Only jpeg, jpg, png and bmp');", true);
+                }
+                else if(brwProductImage.PostedFile.ContentLength > 400000)
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Image i greater than 4MB!');", true);
+                }
                 else
                 {
                     brwProductImage.SaveAs(Server.MapPath("~/Assets/ProductImages/" + filename));
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Success! Saved Image to Server!');", true);
+
                 }
             }
             else
