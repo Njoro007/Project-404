@@ -19,7 +19,7 @@
             <tr>
                 <td>Product Category:</td>
                 <td>
-                    <asp:DropDownList ID="DropCategory" runat="server">
+                    <asp:DropDownList ID="DropCategory" runat="server" AutoPostBack="True">
                     </asp:DropDownList>
                 </td>
             </tr>
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                <th>Product Image:</th>
-                <th><asp:FileUpload ID="productImage" runat="server"></asp:FileUpload></th>
+                <th><asp:FileUpload ID="brwProductImage" runat="server"></asp:FileUpload></th>
             </tr>
             <tr>
                <th>Product Price:</th>
@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <th>
-                    <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
+                    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"></asp:Button>
                 </th>
             </tr>
         </table>

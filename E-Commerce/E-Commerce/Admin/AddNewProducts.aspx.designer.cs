@@ -40,13 +40,13 @@ namespace E_Commerce.Admin {
         protected global::System.Web.UI.WebControls.TextBox txtProductDescription;
         
         /// <summary>
-        /// productImage control.
+        /// brwProductImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload productImage;
+        protected global::System.Web.UI.WebControls.FileUpload brwProductImage;
         
         /// <summary>
         /// txtProductPrice control.

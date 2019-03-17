@@ -1,3 +1,5 @@
+F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csprojAssemblyReference.cache
+F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csproj.CoreCompileInputs.cache
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\E-Commerce.dll.config
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\E-Commerce.dll
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\E-Commerce.pdb
@@ -49,8 +51,6 @@ F:\Github\Project-404\E-Commerce\E-Commerce\bin\roslyn\VBCSCompiler.exe
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\roslyn\VBCSCompiler.exe.config
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csprojAssemblyReference.cache
-F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csproj.CoreCompileInputs.cache
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csproj.CopyComplete
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.dll
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.pdb
