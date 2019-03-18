@@ -13,5 +13,10 @@ namespace E_Commerce
         {
 
         }
+
+        protected void btnAddToCart_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
