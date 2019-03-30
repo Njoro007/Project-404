@@ -44,6 +44,7 @@
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <table align="center" class="style1">
@@ -63,7 +64,7 @@
                                         <asp:Image ID="Image2" runat="server" Height="43px" Width="60px" ImageUrl="~/Assets/Cart.png" />
                                     </td>
                                     <td align="left">
-                                        <asp:LinkButton ID="btnShoppingCart" runat="server" Font-Size="20pt" ForeColor="BurlyWood">0</asp:LinkButton>
+                                        <asp:LinkButton ID="btnShoppingCart" runat="server" Font-Size="20pt" ForeColor="BurlyWood" OnClick="btnShoppingCart_Click">0</asp:LinkButton>
                                     </td>
                                 </tr>
                                 <tr>
@@ -104,22 +105,26 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <img alt="" src="<%# Bind('ImageUrl')%>" runat="server" id="imgProductPhoto" style="border: ridge 1px; width: 173px; height: 160px;" />
+                                                                    <img alt="" src='<%# Eval("ImageUrl")%>' runat="server" id="imgProductPhoto" style="border: ridge 1px; width: 173px; height: 160px;" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Price:
-                                                                    <asp:Label runat="server" ID="lblPrice" Text="<%# Bind('Price') %>"></asp:Label>
+                                                                    <asp:Label runat="server" ID="lblPrice" Text='<%# Eval("Price") %>'></asp:Label>
+                                                                    Stock:&nbsp
+                                                                    <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>' ToolTip="Available Stock" ForeColor="BurlyWood"></asp:Label>
+                                                                    <asp:HiddenField ID="hfProductID" runat="server" value='<%# Eval("ProductID") %>' />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <asp:Button ID="btnAddToCart" runat="server" CommandArgument="<%# Bind('ProductID') %>" Text="Add To Cart" Width="100%" BorderStyle="Inset" BorderWidth="1px" OnClick="btnAddToCart_Click" />
+                                                                    <asp:Button ID="btnAddToCart" runat="server" CommandArgument='<%# Eval("ProductID") %>' Text="Add To Cart" Width="100%" BorderStyle="Inset" BorderWidth="1px" OnClick="btnAddToCart_Click" CausesValidation="false" />
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </div>
                                                 </ItemTemplate>
+                                                <ItemStyle Width="33%" />
                                             </asp:DataList>
                                         </asp:Panel>
                                     </td>
@@ -129,12 +134,57 @@
                                                 <FooterStyle BackColor="Beige" ForeColor="Black" />
                                                 <HeaderStyle BackColor="BurlyWood" ForeColor="White" Font-Bold="true" />
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbtnCategory" runat="server" Text="<%# Bind('CategoryName') %>" CommandArgument="<%# Bind('CategoryID') %>" ></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbtnCategory" runat="server" OnClick="lbtnCategory_Click" Text='<%# Eval("CategoryName") %>' CommandArgument='<%# Eval("CategoryID") %>' ></asp:LinkButton>
                                                 </ItemTemplate>
                                                 <SelectedItemStyle BackColor="AppWorkspace" Font-Bold="true" ForeColor="GreenYellow" />
                                             </asp:DataList>
                                         </asp:Panel>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:UpdatePanel ID="pnlEmptyCart" runat="server" Visible="false">
+                                            <div style="text-align:center;">
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <asp:Image ID="Image3" runat="server" ImageUrl="~/Assets/Empty.png"/>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </asp:UpdatePanel>
+                                        <asp:UpdatePanel ID="pnlOrderPlacedSuccessfully" runat="server" Visible="false">
+                                            <div style="text-align:center;">
+                                                <asp:Image ID="Image4" runat="server" ImageUrl="~/Assets/successful.png" />
+                                                <br />
+                                                <br />
+                                                <asp:Label ID="Label1" runat="server" Text="Order has been succesfully placed!"></asp:Label>
+                                                <br />
+                                                Transaction Details will be sent at the email ID provided by you!
+                                                <br />
+                                                <br />
+                                                <asp:Label ID="lblTransactionNo" runat="server" Font-Bold="true"></asp:Label>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <a href="#" target="_blank">Track your order</a>
+                                                <br />
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </asp:UpdatePanel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    &nbsp
+                                    <asp:Label ID="Label2" runat="server" Text="CMT 423 E-COMMERCE PROJECT"></asp:Label>
+                                    &nbsp||&nbsp
+                                    <asp:LinkButton ID="btnAdmin" runat="server" onClick="btnAdmin_Click" >Administrator Panel</asp:LinkButton>
                                 </tr>
                             </table>
                         </td>

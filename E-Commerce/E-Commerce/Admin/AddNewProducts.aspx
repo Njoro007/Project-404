@@ -36,6 +36,10 @@
                 <th><asp:TextBox ID="txtProductPrice" runat="server"></asp:TextBox></th>
             </tr>
             <tr>
+               <th>Product Quantity:</th>
+                <th><asp:TextBox ID="txtProductQuantity" runat="server"></asp:TextBox></th>
+            </tr>
+            <tr>
                 <th>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"></asp:Button>
                 </th>

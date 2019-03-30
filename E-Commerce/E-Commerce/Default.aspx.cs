@@ -18,5 +18,19 @@ namespace E_Commerce
         {
 
         }
+
+        protected void btnShoppingCart_Click(object sender, EventArgs e)
+        {
+            //GetMyCart();
+            lblCategoryName.Text = "My Drinks Shopping Cart.";
+            lblProducts.Text = "Checkout.";
+            pnlCategories.Visible = false;
+            pnlProducts.Visible = false;
+        }
+
+        protected void btnAdmin_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Admin/login.aspx");
+        }
     }
 }

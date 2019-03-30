@@ -13,12 +13,14 @@ namespace E_Commerce.Admin
         String LoginId, Password;
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoginId = WebConfigurationManager.AppSettings["AdminLoginID"];
-            Password = WebConfigurationManager.AppSettings["AdminPassword"];
+            txtUname.Focus();
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            LoginId = WebConfigurationManager.AppSettings["AdminLoginID"];
+            Password = WebConfigurationManager.AppSettings["AdminPassword"];
+
             if (txtUname.Text == LoginId && txtPwd.Text == Password)
             {
                 Session["Admin"]="Admin";

@@ -74,6 +74,7 @@
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\main.css" />
     <Content Include="Assets\css\noscript.css" />
+    <Content Include="Assets\Empty.png" />
     <Content Include="Assets\logo.png" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config" />

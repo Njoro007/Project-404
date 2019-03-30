@@ -15,7 +15,23 @@ namespace E_Commerce.Admin
             if (!IsPostBack)
             {
                 GetCategories();
+                AddSubmitEvent();
+
+                if (Request.QueryString["alert"] == "success")
+                {
+                    Response.Write("<script>alert('Data saved successfully!');</script>");
+                }
             }
+        }
+
+        private void AddSubmitEvent()
+        {
+            UpdatePanel updatePanel = Page.Master.FindControl("AdminUpdatePanel") as UpdatePanel;
+            UpdatePanelControlTrigger trigger = new PostBackTrigger
+            {
+                ControlID = btnSave.UniqueID
+            };
+            updatePanel.Triggers.Add(trigger);
         }
 
         private void GetCategories()
@@ -43,17 +59,26 @@ namespace E_Commerce.Admin
                     ProductImage = "~/Assets/ProductImages/" + brwProductImage.FileName,
                     ProductPrice = txtProductPrice.Text,
                     ProductDescription = txtProductDescription.Text,
-                    CategoryID = Convert.ToInt32(DropCategory.SelectedValue)
+                    CategoryID = Convert.ToInt32(DropCategory.SelectedValue),
+                    TotalProducts = Convert.ToInt32(txtProductQuantity.Text)
                 };
                 d.AddNewProduct();
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Product saved successfully!');", true);
-
+                Response.Write("~/Admin/AddNewProducts.aspx?alert=success");
                 //ClearText();
             }
             else
             {
-
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Please upload photo!');", true);
             }
+        }
+
+        private void ClearText()
+        {
+            brwProductImage = null;
+            txtProductDescription.Text = string.Empty;
+            txtProductName.Text = string.Empty;
+            txtProductPrice.Text = string.Empty;
+            txtProductQuantity.Text = string.Empty;
         }
 
         private void SaveProductPhoto()
