@@ -44,7 +44,6 @@
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <table align="center" class="style1">
@@ -74,20 +73,7 @@
                             </table>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <table align="center" class="style1" style="border: thin ridge #00ff90">
-                                <tr>
-                                    <td class="style3" style="border-left-style: ridge;">&nbsp
-                                        <asp:Label ID="lblProducts" Text="Products" Font-Size="15pt" runat="server"></asp:Label>
-                                    </td>
-                                    <td class="style2">
-                                        <asp:Label ID="lblCategoryName" Font-Size="15pt" runat="server"></asp:Label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td>
                             <table align="center" class="style1">
@@ -96,7 +82,8 @@
                                         <asp:Panel runat="server" ID="pnlProducts" ScrollBars="Auto" Height="500px" BorderStyle="Inset" BorderWidth="1px">
                                             <asp:DataList runat="server" ID="dlProducts" RepeatColumns="3" Width="600px" Font-Bold="false" Font-Italic="false" Font-Overline="false" Font-Strikeout="false" Font-Underline="false">
                                                 <ItemTemplate>
-                                                    <div align="left">
+                                                    <!--<div align="left">-->
+                                                    <div style="align-content: space-around;">
                                                         <table cellspacing="1" class="style4" style="border: 1px ridge;">
                                                             <tr>
                                                                 <td>
@@ -113,7 +100,7 @@
                                                                     <asp:Label runat="server" ID="lblPrice" Text='<%# Eval("Price") %>'></asp:Label>
                                                                     Stock:&nbsp
                                                                     <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>' ToolTip="Available Stock" ForeColor="BurlyWood"></asp:Label>
-                                                                    <asp:HiddenField ID="hfProductID" runat="server" value='<%# Eval("ProductID") %>' />
+                                                                    <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -127,14 +114,44 @@
                                                 <ItemStyle Width="33%" />
                                             </asp:DataList>
                                         </asp:Panel>
+                                        <asp:UpdatePanel ID="pnlMyCart" runat="server" Visible="false" scrollbars="Auto" height="500px" bordercolor="BurlyWood" borderStyle="Inset">
+                                            <ContentTemplate>
+                                                <table align="center" cellspacing="1">
+                                                    <tr>
+                                                        <td align="center">
+                                                            <asp:Label ID="lblAvailableStockAlert" runat="server" Font-Bold="true" ForeColor="BurlyWood"></asp:Label>
+                                                            <asp:DataList ID="dlCartProducts" runat="server" repeatColumn="3" Font-Bold="false" Font-Italic="false" Font-Overline="false" Font-Strikeout="false" Font-Underline="false" Width="551px">
+                                                                <ItemTemplate>
+                                                                    <div align="left">
+                                                                        <table>
+
+                                                                        </table>
+                                                                    </div>
+                                                                </ItemTemplate>
+                                                                <ItemStyle Width="33%" />
+                                                            </asp:DataList>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center">&nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center">&nbsp;
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </ContentTemplate>
+
+                                        </asp:UpdatePanel>
                                     </td>
                                     <td class="style3" valign="top" align="center">
                                         <asp:Panel ID="pnlCategories" runat="server" ScrollBars="Auto" Height="500px" BorderStyle="Inset" BorderWidth="1px">
-                                            <asp:DataList ID="dlCategories" runat="server" BorderStyle="None" BorderWidth="1px" CellPadding="4" GridLines="Horizontal" Width="252px" >
+                                            <asp:DataList ID="dlCategories" runat="server" BorderStyle="None" BorderWidth="1px" CellPadding="4" GridLines="Horizontal" Width="252px" OnSelectedIndexChanged="dlCategories_SelectedIndexChanged">
                                                 <FooterStyle BackColor="Beige" ForeColor="Black" />
                                                 <HeaderStyle BackColor="BurlyWood" ForeColor="White" Font-Bold="true" />
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbtnCategory" runat="server" OnClick="lbtnCategory_Click" Text='<%# Eval("CategoryName") %>' CommandArgument='<%# Eval("CategoryID") %>' ></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbtnCategory" runat="server" Text='<%# Eval("CategoryName") %>' CommandArgument='<%# Eval("CategoryID") %>' OnClick="lbtnCategory_Click"></asp:LinkButton>
                                                 </ItemTemplate>
                                                 <SelectedItemStyle BackColor="AppWorkspace" Font-Bold="true" ForeColor="GreenYellow" />
                                             </asp:DataList>
@@ -144,51 +161,65 @@
                                 <tr>
                                     <td colspan="2">
                                         <asp:UpdatePanel ID="pnlEmptyCart" runat="server" Visible="false">
-                                            <div style="text-align:center;">
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <asp:Image ID="Image3" runat="server" ImageUrl="~/Assets/Empty.png"/>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                            </div>
+                                            <ContentTemplate>
+                                                <div style="text-align: center;">
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <asp:Image ID="Image3" runat="server" ImageUrl="~/Assets/Empty.png" />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </ContentTemplate>
+
                                         </asp:UpdatePanel>
                                         <asp:UpdatePanel ID="pnlOrderPlacedSuccessfully" runat="server" Visible="false">
-                                            <div style="text-align:center;">
-                                                <asp:Image ID="Image4" runat="server" ImageUrl="~/Assets/successful.png" />
+                                            <ContentTemplate>
+                                                <div style="text-align: center;">
+                                                    <asp:Image ID="Image4" runat="server" ImageUrl="~/Assets/successful.png" />
+                                                    <br />
+                                                    <br />
+                                                    <asp:Label ID="Label1" runat="server" Text="Order has been succesfully placed!"></asp:Label>
+                                                    <br />
+                                                    Transaction Details will be sent at the email ID provided by you!
                                                 <br />
-                                                <br />
-                                                <asp:Label ID="Label1" runat="server" Text="Order has been succesfully placed!"></asp:Label>
-                                                <br />
-                                                Transaction Details will be sent at the email ID provided by you!
-                                                <br />
-                                                <br />
-                                                <asp:Label ID="lblTransactionNo" runat="server" Font-Bold="true"></asp:Label>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <a href="#" target="_blank">Track your order</a>
-                                                <br />
-                                                <br />
-                                                <br />
-                                            </div>
+                                                    <br />
+                                                    <asp:Label ID="lblTransactionNo" runat="server" Font-Bold="true"></asp:Label>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <a href="#" target="_blank">Track your order</a>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </ContentTemplate>
+
                                         </asp:UpdatePanel>
                                     </td>
                                 </tr>
-                                <tr>
-                                    &nbsp
+                                <caption>
+                                    &nbsp;
                                     <asp:Label ID="Label2" runat="server" Text="CMT 423 E-COMMERCE PROJECT"></asp:Label>
-                                    &nbsp||&nbsp
-                                    <asp:LinkButton ID="btnAdmin" runat="server" onClick="btnAdmin_Click" >Administrator Panel</asp:LinkButton>
-                                </tr>
+                                    &nbsp;||&nbsp;
+                                    <asp:LinkButton ID="btnAdmin" runat="server" OnClick="btnAdmin_Click">Administrator Panel</asp:LinkButton>
+                                </caption>
                             </table>
                         </td>
                     </tr>
+                </table>
+
+                </td>
+                </tr>
+                </table>
+
+                </td>
+                </tr>
                 </table>
 
             </ContentTemplate>

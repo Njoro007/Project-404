@@ -32,5 +32,15 @@ namespace E_Commerce
         {
             Response.Redirect("~/Admin/login.aspx");
         }
+
+        protected void dlCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lbtnCategory_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

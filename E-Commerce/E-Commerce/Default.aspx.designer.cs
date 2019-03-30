@@ -67,24 +67,6 @@ namespace E_Commerce {
         protected global::System.Web.UI.WebControls.LinkButton btnShoppingCart;
         
         /// <summary>
-        /// lblProducts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProducts;
-        
-        /// <summary>
-        /// lblCategoryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCategoryName;
-        
-        /// <summary>
         /// pnlProducts control.
         /// </summary>
         /// <remarks>
@@ -101,6 +83,33 @@ namespace E_Commerce {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataList dlProducts;
+        
+        /// <summary>
+        /// pnlMyCart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel pnlMyCart;
+        
+        /// <summary>
+        /// lblAvailableStockAlert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAvailableStockAlert;
+        
+        /// <summary>
+        /// dlCartProducts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList dlCartProducts;
         
         /// <summary>
         /// pnlCategories control.
