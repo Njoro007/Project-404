@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="E_Commerce.Default" %>
+﻿<%@ Page Title="Drinks Shopping" Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="E_Commerce.Default" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
     <style type="text/css">
         .style1 {
             width: 900px;
@@ -73,7 +72,7 @@
                             </table>
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
                             <table align="center" class="style1">
@@ -124,7 +123,6 @@
                                                                 <ItemTemplate>
                                                                     <div align="left">
                                                                         <table>
-
                                                                         </table>
                                                                     </div>
                                                                 </ItemTemplate>
@@ -203,27 +201,22 @@
                                         </asp:UpdatePanel>
                                     </td>
                                 </tr>
-                                <caption>
-                                    &nbsp;
-                                    <asp:Label ID="Label2" runat="server" Text="CMT 423 E-COMMERCE PROJECT"></asp:Label>
-                                    &nbsp;||&nbsp;
-                                    <asp:LinkButton ID="btnAdmin" runat="server" OnClick="btnAdmin_Click">Administrator Panel</asp:LinkButton>
-                                </caption>
+
                             </table>
                         </td>
                     </tr>
                 </table>
 
-                </td>
-                </tr>
-                </table>
-
-                </td>
-                </tr>
-                </table>
-
             </ContentTemplate>
         </asp:UpdatePanel>
+
+
     </form>
+    <div style="align-content:center; align-items:center;">
+        &nbsp;
+            <asp:Label ID="Label2" runat="server" Text="CMT 423 E-COMMERCE PROJECT"></asp:Label>
+        &nbsp;||&nbsp;
+            <asp:LinkButton ID="btnAdmin" runat="server" OnClick="btnAdmin_Click">Administrator Panel</asp:LinkButton>
+    </div>
 </body>
 </html>
