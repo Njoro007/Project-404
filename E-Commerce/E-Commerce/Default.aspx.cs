@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce.Modules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,32 @@ namespace E_Commerce
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsPostBack)
+            {
+                //lblCategoryName.Text = "Popular Drinks";
+                GetCategory();
+                //GetProducts(0); //Get All Products
+            }
+            lblAvailableStockAlert.Text = string.Empty;
+        }
 
+        private void GetCategory()
+        {
+            DrinkCart k = new DrinkCart();
+            dlCategories.DataSource = null;
+            dlCategories.DataSource = k.GetCategories();
+            dlCategories.DataBind();
+        }
+
+        private void GetProducts(int CategoryID)
+        {
+            DrinkCart p = new DrinkCart
+            {
+                CategoryID = CategoryID
+            };
+            dlProducts.DataSource = null;
+            dlProducts.DataSource = p.GetAllProducts();
+            dlProducts.DataBind();
         }
 
         protected void btnAddToCart_Click(object sender, EventArgs e)
@@ -22,8 +48,8 @@ namespace E_Commerce
         protected void btnShoppingCart_Click(object sender, EventArgs e)
         {
             //GetMyCart();
-            lblCategoryName.Text = "My Drinks Shopping Cart.";
-            lblProducts.Text = "Checkout.";
+            //lblCategoryName.Text = "My Drinks Shopping Cart.";
+            //lblProducts.Text = "Checkout.";
             pnlCategories.Visible = false;
             pnlProducts.Visible = false;
         }

@@ -6,8 +6,8 @@ namespace E_Commerce.Modules
 {
     public class DrinkCart
     {
-        public string CategoryName, ProductName, ProductImage, ProductPrice, ProductDescription;
-        public int CategoryID, TotalProducts;
+        public string CategoryName, ProductName, ProductImage, ProductPrice, ProductDescription,CustomerName,CustomerEmailID,CustomerPhoneNo,CustomerAddress,ProductList,PaymentMethod,OrderStatus,OrderNo;
+        public int CategoryID, TotalProducts,ProductID,CustomerID,TotalPrice,StockType,Flag;
 
         public void AddNewCategory()
         {
@@ -30,6 +30,13 @@ namespace E_Commerce.Modules
             DataTable dt = DataAccess.ExecuteDTByProcedure("SP_AddNewProduct", parameters);
         }
 
+        public DataTable GetAllProducts()
+        {
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = DataAccess.AddParamater("@CategoryID", CategoryID, System.Data.SqlDbType.Int, 20);
+            DataTable dt = DataAccess.ExecuteDTByProcedure("SP_GetAllProducts", parameters);
+            return dt;
+        }
         public DataTable GetCategories()
         {
             SqlParameter[] parameters = new SqlParameter[0];

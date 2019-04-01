@@ -113,8 +113,7 @@
                                                 <ItemStyle Width="33%" />
                                             </asp:DataList>
                                         </asp:Panel>
-                                        <asp:UpdatePanel ID="pnlMyCart" runat="server" Visible="false" scrollbars="Auto" height="500px" bordercolor="BurlyWood" borderStyle="Inset">
-                                            <ContentTemplate>
+                                        <asp:Panel ID="pnlMyCart" runat="server" Visible="false" scrollbars="Auto" height="500px" bordercolor="BurlyWood" borderStyle="Inset">                                         
                                                 <table align="center" cellspacing="1">
                                                     <tr>
                                                         <td align="center">
@@ -122,7 +121,34 @@
                                                             <asp:DataList ID="dlCartProducts" runat="server" repeatColumn="3" Font-Bold="false" Font-Italic="false" Font-Overline="false" Font-Strikeout="false" Font-Underline="false" Width="551px">
                                                                 <ItemTemplate>
                                                                     <div align="left">
-                                                                        <table>
+                                                                        <table cellspacing="1" style="border:1px ridge #d48200; text-align:center; width:172px;">
+                                                                            <tr>
+                                                                                <td style="border-bottom-style:ridge; border-width:1px; border-color:#d48200">
+                                                                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("Name") %>' style="font-weight:700;"></asp:Label>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <img src='<%# Eval("ImageUrl") %>' id="imgProductPhoto" style="width:157px; height:130px; border:ridge 1px #d48200"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    AvailableStock: &nbsp;
+                                                                                    <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>' ToolTip="Available Stock" Font-Bold="true" ForeColor="BurlyWood"></asp:Label>
+                                                                                    <br />
+                                                                                    Price: <asp:Label runat="server" ID="lblPrice" Text ='<%# Eval("Price") %>'></asp:Label>
+                                                                                    &nbsp; &nbsp;
+<%--                                                                                    <asp:TextBox ID="txtProductQuantity" Width="10px" Height="10px" MaxLength="1" OnTextChanged="txtProductQuantity_TextChanged" AutoPostBack="true" Text='<%# Eval("ProductQuantity") %>' runat="server"></asp:TextBox>--%>
+                                                                                    <asp:HiddenField runat="server" ID="hfProductID" Value='<%# Eval("ProductID") %>' />
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <hr />
+                                                                                    <asp:Button ID="btnRemoveFromCart" runat="server" CommandArgument='<%# Eval("ProductID") %>' Text="Remove From Cart" Width="100%" BorderColor="Beige" BorderStyle="Inset" BorderWidth="1px" CausesValidation="false" OnClick="btnAddToCart_Click" />
+                                                                                </td>
+                                                                            </tr>
                                                                         </table>
                                                                     </div>
                                                                 </ItemTemplate>
@@ -139,9 +165,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </ContentTemplate>
-
-                                        </asp:UpdatePanel>
+                                        </asp:Panel>
                                     </td>
                                     <td class="style3" valign="top" align="center">
                                         <asp:Panel ID="pnlCategories" runat="server" ScrollBars="Auto" Height="500px" BorderStyle="Inset" BorderWidth="1px">
@@ -154,12 +178,114 @@
                                                 <SelectedItemStyle BackColor="AppWorkspace" Font-Bold="true" ForeColor="GreenYellow" />
                                             </asp:DataList>
                                         </asp:Panel>
+                                        <asp:Panel ID="pnlCheckOut" ScrollBars="Auto" Height="500px" BorderStyle="Inset" BorderWidth="1px" Visible="false" runat="server">
+                                            <table style="width:230px">
+                                                <tr>
+                                                    <td align="left">
+                                                        Name:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtCustomerName" Width="231px"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtCustomerName" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Phone No.:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtCustomerPhoneNo" Width="231px"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator2" maxlength="10" ControlToValidate="txtCustomerPhoneNo" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Customer Email:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtCustomerEmailID" Width="231px"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator3" ControlToValidate="txtCustomerEmailID" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Address:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        &nbsp; 
+                                                        <asp:TextBox ID="txtCustomerAddress" Width="227" Height="81px" TextMode="MultiLine" runat="server"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator4" ControlToValidate="txtCustomerAddress" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Total Products:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtTotalProducts" Width="231px"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator5" ControlToValidate="txtTotalProducts" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Total Price:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtTotalPrice" Width="231px"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator6" ControlToValidate="txtTotalPrice" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        Payment Mode:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+                                                            <asp:ListItem Value="1">
+                                                                Cash On Delivery
+                                                            </asp:ListItem>
+                                                            <asp:ListItem Value="2" Selected="True">
+                                                                Mobile Payment
+                                                            </asp:ListItem>
+                                                        </asp:RadioButtonList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <br />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Button ID="btnPlaceOrder" runat="server" Text="CheckOut" style="width:90px; font-weight:700;"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <!--Regular Expression validator for email missing-->
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:UpdatePanel ID="pnlEmptyCart" runat="server" Visible="false">
-                                            <ContentTemplate>
+                                        <asp:Panel ID="pnlEmptyCart" runat="server" Visible="false">
                                                 <div style="text-align: center;">
                                                     <br />
                                                     <br />
@@ -173,11 +299,8 @@
                                                     <br />
                                                     <br />
                                                 </div>
-                                            </ContentTemplate>
-
-                                        </asp:UpdatePanel>
-                                        <asp:UpdatePanel ID="pnlOrderPlacedSuccessfully" runat="server" Visible="false">
-                                            <ContentTemplate>
+                                        </asp:Panel>
+                                        <asp:Panel ID="pnlOrderPlacedSuccessfully" runat="server" Visible="false">
                                                 <div style="text-align: center;">
                                                     <asp:Image ID="Image4" runat="server" ImageUrl="~/Assets/successful.png" />
                                                     <br />
@@ -196,9 +319,7 @@
                                                     <br />
                                                     <br />
                                                 </div>
-                                            </ContentTemplate>
-
-                                        </asp:UpdatePanel>
+                                        </asp:Panel>
                                     </td>
                                 </tr>
 
@@ -210,13 +331,13 @@
             </ContentTemplate>
         </asp:UpdatePanel>
 
-
-    </form>
-    <div style="align-content:center; align-items:center;">
-        &nbsp;
+        
+    <div style="align-content:center; align:center;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Label ID="Label2" runat="server" Text="CMT 423 E-COMMERCE PROJECT"></asp:Label>
         &nbsp;||&nbsp;
             <asp:LinkButton ID="btnAdmin" runat="server" OnClick="btnAdmin_Click">Administrator Panel</asp:LinkButton>
     </div>
+    </form>
 </body>
 </html>
