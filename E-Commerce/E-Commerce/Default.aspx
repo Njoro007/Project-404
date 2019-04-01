@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link rel="stylesheet" href="Assets/css/main.css" />
     <style type="text/css">
         .style1 {
             width: 900px;
@@ -51,7 +52,9 @@
                             <table class="style1" style="border-width: medium;">
                                 <tr>
                                     <td class="style8" rowspan="2">
-                                        <asp:Image ID="Image1" runat="server" Height="83px" Width="110px" ImageUrl="~/Assets/logo.png" />
+                                        <asp:LinkButton ID="lblLogo" runat="server" OnClick="lblLogo_Click">
+                                            <asp:Image ID="Image1" runat="server" Height="83px" Width="110px" ImageUrl="~/Assets/logo.png" />
+                                        </asp:LinkButton>
                                         &nbsp
                                     </td>
                                     <td class="style6" rowspan="2">&nbsp
@@ -77,6 +80,14 @@
                         <td>
                             <table align="center" class="style1">
                                 <tr>
+                                    <td>
+                                        <asp:Label ID="lblCategoryName" runat="server"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="lblProducts" runat="server"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="style2" valign="top">
                                         <asp:Panel runat="server" ID="pnlProducts" ScrollBars="Auto" Height="500px" BorderStyle="Inset" BorderWidth="1px">
                                             <asp:DataList runat="server" ID="dlProducts" RepeatColumns="3" Width="600px" Font-Bold="false" Font-Italic="false" Font-Overline="false" Font-Strikeout="false" Font-Underline="false">
@@ -97,7 +108,7 @@
                                                             <tr>
                                                                 <td>Price:
                                                                     <asp:Label runat="server" ID="lblPrice" Text='<%# Eval("Price") %>'></asp:Label>
-                                                                    Stock:&nbsp
+                                                                    /= Stock:&nbsp
                                                                     <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>' ToolTip="Available Stock" ForeColor="BurlyWood"></asp:Label>
                                                                     <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
                                                                 </td>

@@ -14,9 +14,10 @@ namespace E_Commerce
         {
             if(!IsPostBack)
             {
-                //lblCategoryName.Text = "Popular Drinks";
+                lblCategoryName.Text = "Popular Drinks";
+                lblProducts.Text = "Categories";
                 GetCategory();
-                //GetProducts(0); //Get All Products
+                GetProducts(0); //Get All Products
             }
             lblAvailableStockAlert.Text = string.Empty;
         }
@@ -48,8 +49,8 @@ namespace E_Commerce
         protected void btnShoppingCart_Click(object sender, EventArgs e)
         {
             //GetMyCart();
-            //lblCategoryName.Text = "My Drinks Shopping Cart.";
-            //lblProducts.Text = "Checkout.";
+            lblCategoryName.Text = "My Drinks Shopping Cart.";
+            lblProducts.Text = "Checkout.";
             pnlCategories.Visible = false;
             pnlProducts.Visible = false;
         }
@@ -66,7 +67,30 @@ namespace E_Commerce
 
         protected void lbtnCategory_Click(object sender, EventArgs e)
         {
+            lblProducts.Text = "Categories";
+            lblCategoryName.Text = "Category Products";
 
+            pnlMyCart.Visible = false;
+            pnlProducts.Visible = true;
+            int CategoryID = Convert.ToInt16((((LinkButton)sender).CommandArgument));
+            GetProducts(CategoryID);
+            //HighLightCartProducts();
+        }
+
+        protected void lblLogo_Click(object sender, EventArgs e)
+        {
+            lblProducts.Text = "Categories";
+            lblCategoryName.Text = "All Products";
+
+            pnlCategories.Visible = true;
+            pnlProducts.Visible = true;
+            pnlMyCart.Visible = false;
+            pnlCheckOut.Visible = false;
+            pnlEmptyCart.Visible = false;
+            pnlOrderPlacedSuccessfully.Visible = false;
+
+            GetProducts(0);
+            //HighLightCartProducts();
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="E_Commerce.Admin.login" %>
+﻿<%@ Page Title="Admin Login" Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="E_Commerce.Admin.login" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -80,7 +79,7 @@
     <form id="form1" runat="server">
         <div>
             <div class="imgcontainer">
-                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                <img src="Assets/admin.png" alt="Avatar" class="avatar">
             </div>
 
             <div class="container">

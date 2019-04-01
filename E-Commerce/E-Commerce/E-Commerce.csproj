@@ -70,6 +70,7 @@
     <Content Include="Admin\AddEditCategory.aspx" />
     <Content Include="Admin\AddNewProducts.aspx" />
     <Content Include="Admin\login.aspx" />
+    <Content Include="Assets\admin.png" />
     <Content Include="Assets\Cart.png" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\main.css" />
