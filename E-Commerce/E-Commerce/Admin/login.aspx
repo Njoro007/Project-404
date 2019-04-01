@@ -79,7 +79,7 @@
     <form id="form1" runat="server">
         <div>
             <div class="imgcontainer">
-                <img src="Assets/admin.png" alt="Avatar" class="avatar">
+                <img src="..//Assets/admin.png" alt="Avatar" class="avatar">
             </div>
 
             <div class="container">
