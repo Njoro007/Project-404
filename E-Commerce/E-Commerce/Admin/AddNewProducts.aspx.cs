@@ -1,10 +1,18 @@
 ﻿
 using E_Commerce.Modules;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.Configuration;
+using System.Web.Configuration;
+using System.Net;
+using System.IO;
 
 namespace E_Commerce.Admin
 {
@@ -87,17 +95,21 @@ namespace E_Commerce.Admin
             {
                 string filename = brwProductImage.PostedFile.FileName.ToString();
                 string fileExt = System.IO.Path.GetExtension(brwProductImage.FileName);
+                //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
+                string dirpath = Directory.GetCurrentDirectory();
+                string folderpath=Convert.ToString(brwProductImage.PostedFile.FileName);
+
 
                 if (filename.Length > 96)
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('File Name is too long!');", true);
                 }
                 //else if()
-                else if(fileExt != ".jpeg" && fileExt != ".jpp" && fileExt != ".png" && fileExt != ".bmp")
+                else if (fileExt != ".jpeg" && fileExt != ".jpp" && fileExt != ".png" && fileExt != ".bmp")
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Only jpeg, jpg, png and bmp');", true);
                 }
-                else if(brwProductImage.PostedFile.ContentLength > 400000)
+                else if (brwProductImage.PostedFile.ContentLength > 400000)
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Image i greater than 4MB!');", true);
                 }
@@ -105,13 +117,77 @@ namespace E_Commerce.Admin
                 {
                     brwProductImage.SaveAs(Server.MapPath("~/Assets/ProductImages/" + filename));
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Success! Saved Image to Server!');", true);
+                }
+
+
+                //Uploading to Azure
+                try
+
+                {
+                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString"));
+                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+                    // This call creates a local CloudBlobContainer object, but does not make a network call
+                    // to the Azure Storage Service. The container on the service that this object represents may
+                    // or may not exist at this point. If it does exist, the properties will not yet have been
+                    // popluated on this object.
+                    CloudBlobContainer blobContainer = blobClient.GetContainerReference("cmt423");
+
+                    // This makes an actual service call to the Azure Storage service. Unless this call fails,
+                    // the container will have been created.
+                    blobContainer.CreateIfNotExists();
+
+                    // This also does not make a service call, it only creates a local object.
+                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference("cmt423");
+
+                    // This transfers data in the file to the blob on the service.
+                    //using (Stream file = File.OpenRead(filename))
+                    //{
+                        blob.UploadFromFile(folderpath);
+                    //}
+                        
+
+                    //StorageCredentials creden = new StorageCredentials(accountname, accesskey);
+
+                    //CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+
+                    //CloudBlobClient client = acc.CreateCloudBlobClient();
+
+                    //CloudBlobContainer cont = client.GetContainerReference("cmt423");
+
+                    //cont.CreateIfNotExists();
+
+                    //cont.SetPermissions(new BlobContainerPermissions
+                    //{
+                    //    PublicAccess = BlobContainerPublicAccessType.Blob
+
+                    //});
+                    //CloudBlockBlob cblob  = cont.GetBlockBlobReference("cmt423");
+
+                    //using (Stream file = System.IO.File.OpenRead(folderPath))
+
+                    //{
+
+                    //    cblob.UploadFromStream(file);
+
+                    //}
 
                 }
+                catch (Exception ex)
+
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Failed to save to azure!');", true);
+
+                }
+
             }
             else
             {
 
             }
         }
+
+
+
     }
 }

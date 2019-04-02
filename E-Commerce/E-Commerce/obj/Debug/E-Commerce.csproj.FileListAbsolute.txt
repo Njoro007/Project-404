@@ -54,3 +54,12 @@ F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.CodeDom.Providers.DotN
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.csproj.CopyComplete
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.dll
 F:\Github\Project-404\E-Commerce\E-Commerce\obj\Debug\E-Commerce.pdb
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.Azure.KeyVault.Core.dll
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.WindowsAzure.Storage.dll
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Newtonsoft.Json.dll
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.Azure.KeyVault.Core.xml
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.WindowsAzure.Storage.pdb
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.WindowsAzure.Storage.xml
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Newtonsoft.Json.xml
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.WindowsAzure.Configuration.dll
+F:\Github\Project-404\E-Commerce\E-Commerce\bin\Microsoft.WindowsAzure.Configuration.xml
