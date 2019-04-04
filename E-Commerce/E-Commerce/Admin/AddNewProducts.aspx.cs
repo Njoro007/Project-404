@@ -77,8 +77,7 @@ namespace E_Commerce.Admin
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
                 //localpath = Directory.GetCurrentDirectory();
                 string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Info", "<script language='javascript'>alert(" + localpath + ");</script>", false);
-
+                Response.Write("<script>alert(" + localpath + ");</script>");
 
                 if (filename.Length > 96)
                 {
@@ -125,8 +124,8 @@ namespace E_Commerce.Admin
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(filename);
 
-                //using (Stream file = System.IO.File.OpenRead(@"F:\\cocopng1.png"))
-                using (Stream file = System.IO.File.OpenRead(localpath))
+                using (Stream file = System.IO.File.OpenRead(@"F:\\cocopng1.png"))
+                //using (Stream file = System.IO.File.OpenRead(localpath))
 
                 {
                     cblob.UploadFromStream(file);
