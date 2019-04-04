@@ -43,6 +43,9 @@
                 <th>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"></asp:Button>
                 </th>
+                <th>
+    <asp:Label ID="lblfeedback" runat="server"></asp:Label>
+                </th>
             </tr>
         </table>
     </div>

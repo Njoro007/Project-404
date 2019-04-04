@@ -77,6 +77,7 @@ namespace E_Commerce.Admin
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
                 //localpath = Directory.GetCurrentDirectory();
                 string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
+                lblfeedback.Text = localpath;
 
 
                 if (filename.Length > 96)
@@ -136,7 +137,6 @@ namespace E_Commerce.Admin
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Somethong wrong happened while uploading to azure!');", true);
-
             }
         }
 
