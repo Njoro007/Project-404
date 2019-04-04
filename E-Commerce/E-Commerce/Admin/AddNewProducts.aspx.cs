@@ -77,7 +77,7 @@ namespace E_Commerce.Admin
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
                 //localpath = Directory.GetCurrentDirectory();
                 string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Info", "<script language='javascript'>alert(" + localpath + ");</script>", false)
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Info", "<script language='javascript'>alert(" + localpath + ");</script>", false);
 
 
                 if (filename.Length > 96)
