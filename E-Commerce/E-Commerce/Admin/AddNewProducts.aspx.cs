@@ -77,7 +77,7 @@ namespace E_Commerce.Admin
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
                 //localpath = Directory.GetCurrentDirectory();
                 string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
-                lblfeedback.Text = localpath;
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Info", "<script language='javascript'>alert(" + localpath + ");</script>", false)
 
 
                 if (filename.Length > 96)
@@ -97,7 +97,6 @@ namespace E_Commerce.Admin
                 {
                     UploadToAzure();
                     //brwProductImage.SaveAs(Server.MapPath("~/Assets/ProductImages/" + filename));
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Success! Saved Image to Server!');", true);
                 }
             }
             else
