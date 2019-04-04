@@ -13,11 +13,13 @@ using System.Configuration;
 using System.Web.Configuration;
 using System.Net;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace E_Commerce.Admin
 {
     public partial class AddNewProducts : System.Web.UI.Page
     {
+        private string blobUrl,filename,fileExt,localpath;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -55,31 +57,6 @@ namespace E_Commerce.Admin
             }
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (brwProductImage.PostedFile != null)
-            {
-                SaveProductPhoto();
-
-                DrinkCart d = new DrinkCart()
-                {
-                    ProductName = txtProductName.Text,
-                    ProductImage = "~/Assets/ProductImages/" + brwProductImage.FileName,
-                    ProductPrice = txtProductPrice.Text,
-                    ProductDescription = txtProductDescription.Text,
-                    CategoryID = Convert.ToInt32(DropCategory.SelectedValue),
-                    TotalProducts = Convert.ToInt32(txtProductQuantity.Text)
-                };
-                d.AddNewProduct();
-                Response.Write("~/Admin/AddNewProducts.aspx?alert=success");
-                //ClearText();
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Please upload photo!');", true);
-            }
-        }
-
         private void ClearText()
         {
             brwProductImage = null;
@@ -87,17 +64,19 @@ namespace E_Commerce.Admin
             txtProductName.Text = string.Empty;
             txtProductPrice.Text = string.Empty;
             txtProductQuantity.Text = string.Empty;
+            blobUrl = string.Empty;
         }
 
         private void SaveProductPhoto()
         {
             if (brwProductImage != null)
             {
-                string filename = brwProductImage.PostedFile.FileName.ToString();
-                string fileExt = System.IO.Path.GetExtension(brwProductImage.FileName);
+                filename = brwProductImage.PostedFile.FileName.ToString();
+                localpath = Path.GetFullPath(filename);
+                fileExt = System.IO.Path.GetExtension(brwProductImage.FileName);
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
-                string dirpath = Directory.GetCurrentDirectory();
-                string folderpath=Convert.ToString(brwProductImage.PostedFile.FileName);
+                //localpath = Directory.GetCurrentDirectory();
+                string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
 
 
                 if (filename.Length > 96)
@@ -115,71 +94,10 @@ namespace E_Commerce.Admin
                 }
                 else
                 {
-                    brwProductImage.SaveAs(Server.MapPath("~/Assets/ProductImages/" + filename));
+                    UploadToAzure();
+                    //brwProductImage.SaveAs(Server.MapPath("~/Assets/ProductImages/" + filename));
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Success! Saved Image to Server!');", true);
                 }
-
-
-                //Uploading to Azure
-                try
-
-                {
-                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureStorageConnectionString"));
-                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-                    // This call creates a local CloudBlobContainer object, but does not make a network call
-                    // to the Azure Storage Service. The container on the service that this object represents may
-                    // or may not exist at this point. If it does exist, the properties will not yet have been
-                    // popluated on this object.
-                    CloudBlobContainer blobContainer = blobClient.GetContainerReference("cmt423");
-
-                    // This makes an actual service call to the Azure Storage service. Unless this call fails,
-                    // the container will have been created.
-                    blobContainer.CreateIfNotExists();
-
-                    // This also does not make a service call, it only creates a local object.
-                    CloudBlockBlob blob = blobContainer.GetBlockBlobReference("cmt423");
-
-                    // This transfers data in the file to the blob on the service.
-                    //using (Stream file = File.OpenRead(filename))
-                    //{
-                        blob.UploadFromFile(folderpath);
-                    //}
-                        
-
-                    //StorageCredentials creden = new StorageCredentials(accountname, accesskey);
-
-                    //CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
-
-                    //CloudBlobClient client = acc.CreateCloudBlobClient();
-
-                    //CloudBlobContainer cont = client.GetContainerReference("cmt423");
-
-                    //cont.CreateIfNotExists();
-
-                    //cont.SetPermissions(new BlobContainerPermissions
-                    //{
-                    //    PublicAccess = BlobContainerPublicAccessType.Blob
-
-                    //});
-                    //CloudBlockBlob cblob  = cont.GetBlockBlobReference("cmt423");
-
-                    //using (Stream file = System.IO.File.OpenRead(folderPath))
-
-                    //{
-
-                    //    cblob.UploadFromStream(file);
-
-                    //}
-
-                }
-                catch (Exception ex)
-
-                {
-                    ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Failed to save to azure!');", true);
-
-                }
-
             }
             else
             {
@@ -187,7 +105,64 @@ namespace E_Commerce.Admin
             }
         }
 
+        private void UploadToAzure()
+        {
+            string accountname = "acccmt423";
 
+            string accesskey = "cLrDTxn+D2RKjXNiDX3HO6EjNzWXqXjq2Xy28LiVAp0jZqg8QDWNnx79vd4zPUR85GIIbb75eAEav06Yxz8TZw==";
 
+            try
+            {
+                StorageCredentials creden = new StorageCredentials(accountname, accesskey);
+                CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                CloudBlobClient client = acc.CreateCloudBlobClient();
+                CloudBlobContainer cont = client.GetContainerReference("contcmt423");
+                cont.CreateIfNotExists();
+                cont.SetPermissions(new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+
+                CloudBlockBlob cblob = cont.GetBlockBlobReference(filename);
+
+                //using (Stream file = System.IO.File.OpenRead(@"F:\\cocopng1.png"))
+                using (Stream file = System.IO.File.OpenRead(localpath))
+
+                {
+                    cblob.UploadFromStream(file);
+                    blobUrl = cblob.Uri.AbsoluteUri;
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Somethong wrong happened while uploading to azure!');", true);
+
+            }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (brwProductImage.PostedFile != null)
+            {
+                SaveProductPhoto();
+
+                DrinkCart d = new DrinkCart()
+                {
+                    ProductName = txtProductName.Text,
+                    ProductImage = blobUrl,
+                    ProductPrice = txtProductPrice.Text,
+                    ProductDescription = txtProductDescription.Text,
+                    CategoryID = Convert.ToInt32(DropCategory.SelectedValue),
+                    TotalProducts = Convert.ToInt32(txtProductQuantity.Text)
+                };
+                d.AddNewProduct();
+                Response.Write("~/Admin/AddNewProducts.aspx?alert=success");
+                ClearText();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Please upload photo!');", true);
+            }
+        }
     }
 }
