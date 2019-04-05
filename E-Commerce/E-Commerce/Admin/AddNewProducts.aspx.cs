@@ -83,7 +83,6 @@ namespace E_Commerce.Admin
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('File Name is too long!');", true);
                 }
-                //else if()
                 else if (fileExt != ".jpeg" && fileExt != ".jpp" && fileExt != ".png" && fileExt != ".bmp")
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Only jpeg, jpg, png and bmp');", true);
@@ -124,8 +123,8 @@ namespace E_Commerce.Admin
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(filename);
 
-                using (Stream file = System.IO.File.OpenRead(@"F:\\cocopng1.png"))
-                //using (Stream file = System.IO.File.OpenRead(localpath))
+                //using (Stream file = System.IO.File.OpenRead(@"F:\\Github\\Project-404\\ProductImages\'" + filename))
+                using (Stream file = new FileInfo(Path(filename)).Directory.FullName)
 
                 {
                     cblob.UploadFromStream(file);
@@ -160,6 +159,7 @@ namespace E_Commerce.Admin
             else
             {
                 ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Please upload photo!');", true);
+                brwProductImage.Focus();
             }
         }
     }

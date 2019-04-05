@@ -87,7 +87,7 @@
                 <asp:TextBox ID="txtUname" runat="server" CssClass="input"></asp:TextBox>
 
                 <asp:Label ID="lblpwd" runat="server" Text="Password"></asp:Label>
-                <asp:TextBox ID="txtPwd" runat="server" CssClass="input"></asp:TextBox>
+                <asp:TextBox ID="txtPwd" runat="server" CssClass="input" TextMode="Password"></asp:TextBox>
 
                 <asp:Button CssClass="button" ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
             </div>
