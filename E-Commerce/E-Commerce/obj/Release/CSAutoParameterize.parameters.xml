@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MyConn-Web.config Connection String" description="MyConn Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:foresight.database.windows.net,1433;Initial Catalog=drinks;Persist Security Info=False;User ID=runju;Password=Njoroge49!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="F:\\Github\\Project-404\\E-Commerce\\E-Commerce\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyConn']/@connectionString" />
+  </parameter>
+</parameters>

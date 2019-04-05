@@ -83,7 +83,7 @@ namespace E_Commerce.Admin
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('File Name is too long!');", true);
                 }
-                else if (fileExt != ".jpeg" && fileExt != ".jpp" && fileExt != ".png" && fileExt != ".bmp")
+                else if (fileExt != ".jpeg" && fileExt != ".jpg" && fileExt != ".png" && fileExt != ".bmp")
                 {
                     ScriptManager.RegisterStartupScript(this, typeof(string), "Alert", "alert('Only jpeg, jpg, png and bmp');", true);
                 }
@@ -107,7 +107,7 @@ namespace E_Commerce.Admin
         {
             string accountname = "acccmt423";
 
-            string accesskey = "cLrDTxn+D2RKjXNiDX3HO6EjNzWXqXjq2Xy28LiVAp0jZqg8QDWNnx79vd4zPUR85GIIbb75eAEav06Yxz8TZw==";
+            string accesskey = "4U1uQqqjmvPvMxP98Jp2K7i5p1F8TEQw5FdaHeuhhTDnmlKOceRGV/5xONP6TWoVVV7DGiFfminEg+yHqvOhHQ==";
 
             try
             {
@@ -123,8 +123,8 @@ namespace E_Commerce.Admin
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(filename);
 
-                //using (Stream file = System.IO.File.OpenRead(@"F:\\Github\\Project-404\\ProductImages\'" + filename))
-                using (Stream file = new FileInfo(Path(filename)).Directory.FullName)
+                using (Stream file = System.IO.File.OpenRead(@"F:\\Github\\Project-404\\ProductImages\" + filename))
+                //using (Stream file = new FileInfo(Path(filename)).Directory.FullName)
 
                 {
                     cblob.UploadFromStream(file);
