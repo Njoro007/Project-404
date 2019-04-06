@@ -19,7 +19,7 @@ namespace E_Commerce.Admin
 {
     public partial class AddNewProducts : System.Web.UI.Page
     {
-        private string blobUrl,filename,fileExt,localpath;
+        private string blobUrl,filename,fileExt,localpath,folderpath;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -66,7 +66,6 @@ namespace E_Commerce.Admin
             txtProductQuantity.Text = string.Empty;
             blobUrl = string.Empty;
         }
-
         private void SaveProductPhoto()
         {
             if (brwProductImage != null)
@@ -76,7 +75,8 @@ namespace E_Commerce.Admin
                 fileExt = System.IO.Path.GetExtension(brwProductImage.FileName);
                 //string folderPath = Path.GetDirectoryName(brwProductImage.FileName);
                 //localpath = Directory.GetCurrentDirectory();
-                string folderpath = Convert.ToString(brwProductImage.PostedFile.FileName);
+                folderpath = Convert.ToString(@"F:\\Github\\Project-404\\ProductImages\" + filename);
+
                 Response.Write("<script>alert(" + localpath + ");</script>");
 
                 if (filename.Length > 96)
