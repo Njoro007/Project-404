@@ -151,7 +151,7 @@
                                                                                     <br />
                                                                                     Price: <asp:Label runat="server" ID="lblPrice" Text ='<%# Eval("Price") %>'></asp:Label>
                                                                                     &nbsp; &nbsp;
-<%--                                                                                    <asp:TextBox ID="txtProductQuantity" Width="10px" Height="10px" MaxLength="1" OnTextChanged="txtProductQuantity_TextChanged" AutoPostBack="true" Text='<%# Eval("ProductQuantity") %>' runat="server"></asp:TextBox>--%>
+                                                                                    <asp:TextBox ID="txtProductQuantity" Width="10px" Height="10px" MaxLength="1" OnTextChanged="txtProductQuantity_TextChanged" AutoPostBack="true" Text='<%# Eval("ProductQuantity") %>' runat="server"></asp:TextBox>
                                                                                     <asp:HiddenField runat="server" ID="hfProductID" Value='<%# Eval("ProductID") %>' />
                                                                                 </td>
                                                                             </tr>

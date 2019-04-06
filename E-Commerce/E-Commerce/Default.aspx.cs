@@ -39,6 +39,7 @@ namespace E_Commerce
             {
                 CategoryID = CategoryID
             };
+
             dlProducts.DataSource = null;
             dlProducts.DataSource = p.GetAllProducts();
             dlProducts.DataBind();
@@ -101,7 +102,6 @@ namespace E_Commerce
                 btnShoppingCart.Text = dt.Rows.Count.ToString();
             }
             HighlightCartProducts();
-
         }
 
         public void HighlightCartProducts()
@@ -138,11 +138,72 @@ namespace E_Commerce
 
         protected void btnShoppingCart_Click(object sender, EventArgs e)
         {
-            //GetMyCart();
+            GetMyCart();
             lblCategoryName.Text = "My Drinks Shopping Cart.";
             lblProducts.Text = "Checkout.";
             pnlCategories.Visible = false;
             pnlProducts.Visible = false;
+        }
+
+        private void GetMyCart()
+        {
+            DataTable dtProducts;
+
+            if(Session["MyCart"]!=null)
+            {
+                dtProducts = (DataTable)Session["MyCart"];
+            }
+            else
+            {
+                dtProducts = new DataTable();
+            }
+
+            if(dtProducts.Rows.Count>0)
+            {
+                txtTotalProducts.Text = dtProducts.Rows.Count.ToString();
+                btnShoppingCart.Text = dtProducts.Rows.Count.ToString();
+                dlCartProducts.DataSource = dtProducts;
+                dlCartProducts.DataBind();
+                UpdateTotalBill();
+
+                pnlMyCart.Visible = true;
+                pnlCheckOut.Visible = true;
+                pnlEmptyCart.Visible = false;
+                pnlCategories.Visible = false;
+                pnlProducts.Visible = false;
+                pnlOrderPlacedSuccessfully.Visible = false;
+            }
+            else
+            {
+                pnlEmptyCart.Visible = true;
+                pnlMyCart.Visible = false;
+                pnlCheckOut.Visible = false;
+                pnlCategories.Visible = false;
+                pnlProducts.Visible = false;
+                pnlOrderPlacedSuccessfully.Visible = false;
+
+                dlCartProducts.DataSource = null;
+                dlCartProducts.DataBind();
+                txtTotalProducts.Text = "0";
+                txtTotalPrice.Text = "0";
+                btnShoppingCart.Text = "0";
+            }
+        }
+
+        private void UpdateTotalBill()
+        {
+            long TotalPrice = 0;
+            long TotalProducts = 0;
+            foreach(DataListItem item in dlCartProducts.Items)
+            {
+                Label PriceLabel = item.FindControl("lblPrice") as Label;
+                TextBox ProductQuantity = item.FindControl("txtProductQuantity") as TextBox;
+                long ProductPrice = Convert.ToInt64(PriceLabel.Text) * Convert.ToInt64(ProductQuantity.Text);
+                TotalPrice = TotalPrice + ProductPrice;
+                TotalProducts = TotalProducts + Convert.ToInt32(ProductQuantity.Text);
+            }
+            txtTotalPrice.Text = Convert.ToString(TotalPrice);
+            txtTotalProducts.Text = Convert.ToString(TotalProducts);
         }
 
         protected void btnAdmin_Click(object sender, EventArgs e)
@@ -164,7 +225,7 @@ namespace E_Commerce
             pnlProducts.Visible = true;
             int CategoryID = Convert.ToInt16((((LinkButton)sender).CommandArgument));
             GetProducts(CategoryID);
-            //HighLightCartProducts();
+            HighlightCartProducts();
         }
 
         protected void lblLogo_Click(object sender, EventArgs e)
@@ -180,7 +241,37 @@ namespace E_Commerce
             pnlOrderPlacedSuccessfully.Visible = false;
 
             GetProducts(0);
-            //HighLightCartProducts();
+            HighlightCartProducts();
+        }
+
+        protected void txtProductQuantity_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txtQuantity = (sender as TextBox);
+            DataListItem CurrentItem = (sender as TextBox).NamingContainer as DataListItem;
+            HiddenField ProductID = CurrentItem.FindControl("hfProductID") as HiddenField;
+            Label lblAvailableStock = CurrentItem.FindControl("lblAvailableStock") as Label;
+
+            if(txtQuantity.Text==string.Empty||txtQuantity.Text=="0"||txtQuantity.Text=="1")
+            {
+                txtQuantity.Text = "1";
+            }
+            else
+            {
+                if(Convert.ToInt32(txtQuantity.Text)<=Convert.ToInt32(lblAvailableStock.Text))
+                {
+                    DataTable dt = (DataTable)Session["MyCart"];
+                    DataRow[] rows = dt.Select("ProductID='" + ProductID.Value + "'");
+                    int index = dt.Rows.IndexOf(rows[0]);
+                    dt.Rows[index]["ProductQuantity"] = txtQuantity.Text;
+                    Session["MyCart"] = dt;
+                }
+                else
+                {
+                    lblAvailableStockAlert.Text = "Alert: Product buyout is more than stock quantity!";
+                    txtQuantity.Text = "1";
+                }
+            }
+          UpdateTotalBill();
         }
     }
 }
