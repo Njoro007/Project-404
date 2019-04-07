@@ -35,14 +35,15 @@ namespace E_Commerce
 
         private void GetProducts(int CategoryID)
         {
-            DrinkCart p = new DrinkCart
+            DrinkCart k = new DrinkCart
             {
                 CategoryID = CategoryID
             };
 
             dlProducts.DataSource = null;
-            dlProducts.DataSource = p.GetAllProducts();
+            dlProducts.DataSource = k.GetAllProducts();
             dlProducts.DataBind();
+            //dlProducts.Dispose();
         }
 
         protected void btnAddToCart_Click(object sender, EventArgs e)
@@ -55,8 +56,8 @@ namespace E_Commerce
             if (Session["MyCart"] != null)
             {
                 DataTable dt = (DataTable)Session["MyCart"];
-                var checkProdcut = dt.AsEnumerable().Where(r => r.Field<string>("ProductId") == ProductID);
-                if (checkProdcut.Count() == 0)
+                var checkProduct = dt.AsEnumerable().Where(r => r.Field<string>("ProductId") == ProductID);
+                if (checkProduct.Count() == 0)
                 {
                     string query = "select * from Products where ProductID = " + ProductID + " ";
                     DataTable dtProducts = GetData(query);
@@ -139,10 +140,11 @@ namespace E_Commerce
         protected void btnShoppingCart_Click(object sender, EventArgs e)
         {
             GetMyCart();
-            lblCategoryName.Text = "My Drinks Shopping Cart.";
-            lblProducts.Text = "Checkout.";
-            pnlCategories.Visible = false;
-            pnlProducts.Visible = false;
+            
+            //pnlCheckOut.Visible = true;
+            //pnlMyCart.Visible = true;
+            //lblCategoryName.Text = "My Drinks Shopping Cart.";
+            //lblProducts.Text = "Checkout.";
         }
 
         private void GetMyCart()
@@ -187,6 +189,7 @@ namespace E_Commerce
                 txtTotalProducts.Text = "0";
                 txtTotalPrice.Text = "0";
                 btnShoppingCart.Text = "0";
+
             }
         }
 

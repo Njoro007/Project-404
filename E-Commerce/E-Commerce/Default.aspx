@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="Assets/css/main.css" />
+    <%--<link rel="stylesheet" href="Assets/css/main.css" />--%>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <style type="text/css">
         .style1 {
@@ -150,7 +150,7 @@
                                                                                     <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>' ToolTip="Available Stock" Font-Bold="true" ForeColor="BurlyWood"></asp:Label>
                                                                                     <br />
                                                                                     Price: <asp:Label runat="server" ID="lblPrice" Text ='<%# Eval("Price") %>'></asp:Label>
-                                                                                    &nbsp; &nbsp;
+                                                                                    &nbsp; x&nbsp;
                                                                                     <asp:TextBox ID="txtProductQuantity" Width="10px" Height="10px" MaxLength="1" OnTextChanged="txtProductQuantity_TextChanged" AutoPostBack="true" Text='<%# Eval("ProductQuantity") %>' runat="server"></asp:TextBox>
                                                                                     <asp:HiddenField runat="server" ID="hfProductID" Value='<%# Eval("ProductID") %>' />
                                                                                 </td>
@@ -244,7 +244,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox runat="server" ID="txtTotalProducts" Width="231px"></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtTotalProducts" Width="231px" ReadOnly="true"></asp:TextBox>
                                                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator5" ControlToValidate="txtTotalProducts" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
                                                     </td>
                                                 </tr>
@@ -255,7 +255,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox runat="server" ID="txtTotalPrice" Width="231px"></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtTotalPrice" Width="231px" ReadOnly="true"></asp:TextBox>
                                                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator6" ControlToValidate="txtTotalPrice" ErrorMessage="*" ForeColor="red"></asp:RequiredFieldValidator>
                                                     </td>
                                                 </tr>
@@ -266,7 +266,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="left">
-                                                        <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+                                                        <asp:RadioButtonList ID="rblPaymentMethod" runat="server">
                                                             <asp:ListItem Value="1">
                                                                 Cash On Delivery
                                                             </asp:ListItem>
