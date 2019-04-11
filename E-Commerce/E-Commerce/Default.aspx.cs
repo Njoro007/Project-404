@@ -25,6 +25,7 @@ namespace E_Commerce
             lblAvailableStockAlert.Text = string.Empty;
         }
 
+
         private void GetCategory()
         {
             DrinkCart k = new DrinkCart();
@@ -50,7 +51,7 @@ namespace E_Commerce
         {
             string ProductID = Convert.ToInt16((((Button)sender).CommandArgument)).ToString();
             string ProductQuantity = "1";
-
+            
             DataListItem currentItem = (sender as Button).NamingContainer as DataListItem;
             Label lblAvailableStock = currentItem.FindControl("lblAvailableStock") as Label;
             if (Session["MyCart"] != null)
@@ -80,7 +81,7 @@ namespace E_Commerce
                 string query = "select * from Products where ProductID = " + ProductID + " ";
                 DataTable dtProducts = GetData(query);
 
-                DataTable dt = new DataTable();
+                DataTable dt = new DataTable(); 
 
                 dt.Columns.Add("ProductID", typeof(string));
                 dt.Columns.Add("Name", typeof(string));
@@ -105,7 +106,7 @@ namespace E_Commerce
             HighlightCartProducts();
         }
 
-        public void HighlightCartProducts()
+        private void HighlightCartProducts()
         {
             if (Session["MyCart"] != null)
             {
@@ -140,18 +141,16 @@ namespace E_Commerce
         protected void btnShoppingCart_Click(object sender, EventArgs e)
         {
             GetMyCart();
-            
-            //pnlCheckOut.Visible = true;
-            //pnlMyCart.Visible = true;
-            //lblCategoryName.Text = "My Drinks Shopping Cart.";
-            //lblProducts.Text = "Checkout.";
+
+            lblCategoryName.Text = "Your Drink Cart.";
+            lblProducts.Text = "Checkout.";
         }
 
         private void GetMyCart()
         {
             DataTable dtProducts;
 
-            if(Session["MyCart"]!=null)
+            if (Session["MyCart"] != null)
             {
                 dtProducts = (DataTable)Session["MyCart"];
             }
@@ -160,7 +159,7 @@ namespace E_Commerce
                 dtProducts = new DataTable();
             }
 
-            if(dtProducts.Rows.Count>0)
+            if (dtProducts.Rows.Count > 0)
             {
                 txtTotalProducts.Text = dtProducts.Rows.Count.ToString();
                 btnShoppingCart.Text = dtProducts.Rows.Count.ToString();
@@ -197,7 +196,7 @@ namespace E_Commerce
         {
             long TotalPrice = 0;
             long TotalProducts = 0;
-            foreach(DataListItem item in dlCartProducts.Items)
+            foreach (DataListItem item in dlCartProducts.Items)
             {
                 Label PriceLabel = item.FindControl("lblPrice") as Label;
                 TextBox ProductQuantity = item.FindControl("txtProductQuantity") as TextBox;
@@ -254,27 +253,57 @@ namespace E_Commerce
             HiddenField ProductID = CurrentItem.FindControl("hfProductID") as HiddenField;
             Label lblAvailableStock = CurrentItem.FindControl("lblAvailableStock") as Label;
 
-            if(txtQuantity.Text==string.Empty||txtQuantity.Text=="0"||txtQuantity.Text=="1")
+            if (txtQuantity.Text == string.Empty || txtQuantity.Text == "0" || txtQuantity.Text == "1")
             {
                 txtQuantity.Text = "1";
             }
             else
             {
-                if(Convert.ToInt32(txtQuantity.Text)<=Convert.ToInt32(lblAvailableStock.Text))
+                if (Session["MyCart"] != null)
                 {
-                    DataTable dt = (DataTable)Session["MyCart"];
-                    DataRow[] rows = dt.Select("ProductID='" + ProductID.Value + "'");
-                    int index = dt.Rows.IndexOf(rows[0]);
-                    dt.Rows[index]["ProductQuantity"] = txtQuantity.Text;
+                    if (Convert.ToInt32(txtQuantity.Text) <= Convert.ToInt32(lblAvailableStock.Text))
+                    {
+                        DataTable dt = (DataTable)Session["MyCart"];
+                        DataRow[] rows = dt.Select("ProductID='" + ProductID.Value + "'");
+                        int index = dt.Rows.IndexOf(rows[0]);
+                        dt.Rows[index]["ProductQuantity"] = txtQuantity.Text;
+                        Session["MyCart"] = dt;
+                    }
+                    else
+                    {
+                        lblAvailableStockAlert.Text = "Alert: Product buyout is more than stock quantity!";
+                        txtQuantity.Text = "1";
+                    }
+                }
+
+            }
+            UpdateTotalBill();
+        }
+
+        protected void dlCartProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnRemoveFromCart_Click(object sender, EventArgs e)
+        {
+            String ProductID = Convert.ToInt16((((Button)sender).CommandArgument)).ToString();
+            if(Session["MyCart"]!=null)
+            {
+                DataTable dt = (DataTable)Session["MyCart"];
+                DataRow drr = dt.Select("ProductID=" + ProductID + " ").FirstOrDefault();
+                if(drr!=null)
+                    {
+                    dt.Rows.Remove(drr);
                     Session["MyCart"] = dt;
                 }
-                else
-                {
-                    lblAvailableStockAlert.Text = "Alert: Product buyout is more than stock quantity!";
-                    txtQuantity.Text = "1";
-                }
+                GetMyCart();
             }
-          UpdateTotalBill();
+        }
+
+        protected void btnPlaceOrder_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
