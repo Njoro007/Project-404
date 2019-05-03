@@ -105,16 +105,16 @@ namespace E_Commerce.Admin
 
         private void UploadToAzure()
         {
-            string accountname = "acccmt423";
+            string accountname = "***";
 
-            string accesskey = "4U1uQqqjmvPvMxP98Jp2K7i5p1F8TEQw5FdaHeuhhTDnmlKOceRGV/5xONP6TWoVVV7DGiFfminEg+yHqvOhHQ==";
+            string accesskey = "***";
 
             try
             {
                 StorageCredentials creden = new StorageCredentials(accountname, accesskey);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
-                CloudBlobContainer cont = client.GetContainerReference("contcmt423");
+                CloudBlobContainer cont = client.GetContainerReference("***");
                 cont.CreateIfNotExists();
                 cont.SetPermissions(new BlobContainerPermissions
                 {
@@ -123,7 +123,7 @@ namespace E_Commerce.Admin
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(filename);
 
-                using (Stream file = System.IO.File.OpenRead(@"F:\\Github\\Project-404\\ProductImages\" + filename))
+                using (Stream file = System.IO.File.OpenRead(@"***" + filename))
                 //using (Stream file = new FileInfo(Path(filename)).Directory.FullName)
 
                 {
